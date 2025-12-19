@@ -1,0 +1,65 @@
+{
+    "pluginName": "oddnet.agentStandardPlugin",
+    "pluginVersion": "1.0.0",
+    "author": "OddlyDoddly",
+    "description": "System standard integration and behavior library distributed with OddNet.",
+    "repository": "git@github.com:OddlyDoddly/oddnet.agentStandardPlugin.git",
+    "dependencies": [],
+    "integrations": [
+        {
+            "typeName": "discord",
+            "events": ["discord.onMessageReceived", "chat.onMessageReceived"],
+            "capabilities": ["sendMessage", "setTyping"],
+            "configSchema": {
+                "botToken": { "type": "string", "required": true },
+                "clientId": { "type": "string", "required": true },
+                "guildId": { "type": "string", "required": true }
+            }
+        },
+        {
+            "typeName": "matrix",
+            "events": ["matrix.onMessageReceived", "chat.onMessageReceived"],
+            "capabilities": ["sendMessage", "setTyping"],
+            "configSchema": {
+                "hostname": { "type": "string", "required": true },
+                "accessToken": { "type": "string", "required": true },
+                "storagePath": { "type": "string", "required": true },
+                "matrixId": { "type": "string", "required": true }
+            }
+        }
+        {
+            "typeName": "smtp",
+            "events": ["email.onReceived"],
+            "capabilities": ["sendEmail"],
+            "configSchema": {
+                "hostname": { "type": "string", "required": true },
+                "port": { "type": "number", "required": true },
+                "username": { "type": "string", "required": true },
+                "password": { "type": "string", "required": true },
+                "useTLS": { "type": "boolean", "required": true }
+            }
+        }
+    ],
+    "behaviors": [
+        {
+            "typeName": "emailNotifier",
+            "description": "Raises an event when a new email is received, providing a summary of the email content.",
+            "subscriptions": ["email.onReceived"],
+            "emits": [],
+            "configSchema": {
+                "summaryLlm": { "type": "string", "required": true },
+                "notificationIntegrationId": { "type": "string", "required": true },
+                "notificationIntegrationAction": { "type": "string", "required": true }
+            },
+            "requestContract": {
+                "recipients": { "type": "array", "items": { "type": "string" }, "required": true },
+                "sender": { "type": "string", "required": true },
+                "cc": { "type": "array", "items": { "type": "string" }, "required": false },
+                "bcc": { "type": "array", "items": { "type": "string" }, "required": false },
+                "subject": { "type": "string", "required": true },
+                "body": { "type": "string", "required": true }
+                "attachments": { "type": "array", "items": { "type": "string" }, "required": false }
+            }
+        }
+    ]
+}
