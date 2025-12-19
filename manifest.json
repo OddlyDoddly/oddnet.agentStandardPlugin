@@ -57,7 +57,7 @@
                 "cc": { "type": "array", "items": { "type": "string" }, "required": false },
                 "bcc": { "type": "array", "items": { "type": "string" }, "required": false },
                 "subject": { "type": "string", "required": true },
-                "body": { "type": "string", "required": true }
+                "body": { "type": "string", "required": true },
                 "attachments": { "type": "array", "items": { "type": "string" }, "required": false }
             }
         }
